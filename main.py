@@ -1,7 +1,7 @@
 from Matrix import Matrix
 import copy
 import random
-from Solver import Jacobi_SLAE_Solver
+from Solver import Jacobi_SLAE_Solver, SOR_SLAE_Solver
 print('Практическое задание №6 Обухов Назар ПМИ-41')
 
 def norma(x):
@@ -22,7 +22,14 @@ for n in [5]:
 
     Aj = copy.deepcopy(A)
     fj = copy.deepcopy(f)
-    x0 = Matrix(data=[[random.randint(1, 10) for i in range(n)]])
-    result = Jacobi_SLAE_Solver(Aj, fj, x0)
+    xj = Matrix(data=[[random.randint(1, 10) for i in range(n)]])
+    result = Jacobi_SLAE_Solver(Aj, fj, xj)
     result.print_matrix()
 
+    """
+    As = copy.deepcopy(A)
+    fs = copy.deepcopy(f)
+    xs = Matrix(data=[[random.randint(1, 20) for i in range(n)]])
+    result = SOR_SLAE_Solver(As, fs, xs, 1.75)
+    result.print_matrix()
+"""
