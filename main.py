@@ -1,4 +1,7 @@
 from Matrix import Matrix
+import copy
+import random
+from Solver import Jacobi_SLAE_Solver
 print('Практическое задание №6 Обухов Назар ПМИ-41')
 
 def norma(x):
@@ -17,5 +20,9 @@ for n in [5]:
                 A.data[i][j] = n
     f = A.multiply_matrix(x) #вектор свободных членов
 
-    A.print_matrix()
+    Aj = copy.deepcopy(A)
+    fj = copy.deepcopy(f)
+    x0 = Matrix(data=[[random.randint(1, 10) for i in range(n)]])
+    result = Jacobi_SLAE_Solver(Aj, fj, x0)
+    result.print_matrix()
 
