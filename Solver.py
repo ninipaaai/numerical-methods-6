@@ -15,6 +15,18 @@ def Jacobi_SLAE_Solver(A, f, x0, max_iter=10000, eps=1e-12):
         if abs(A.data[i][i]) < 1e-15:
             raise ValueError(f'Jacobi_SLAE_Solver: Нулевой диагональный элемент в позиции {i}')
 
+    # Проверка на диагональное преобладание
+    diagonal_predominance = True
+    for i in range(M):
+        summ = 0
+        for j in range(M):
+            if j != i:
+                summ += A.data[j][i]
+        if A.data[i][i] <= summ:
+            diagonal_predominance = False
+    if not diagonal_predominance:
+        print('Матрица не обладает диагональным преобладанием, следовательно метод может расходиться')
+
     x = Matrix(data=[[1]*A.rows])
     x_new = Matrix(data=[[1]*A.rows])
     Norm_Xnew_Xold = float('inf')
