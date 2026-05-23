@@ -47,7 +47,7 @@ def SOR_SLAE_Solver(A, f, x0, w, max_iter=10000, eps=1e-12):
 
     x = Matrix(data=[[1] * A.rows])
     x_new = Matrix(data=[[1] * A.rows])
-    Norm_Xnew_Xold = 0.0
+    Norm_Xnew_Xold = float('inf')
     iter = 0
 
     while iter < max_iter and Norm_Xnew_Xold > eps:
