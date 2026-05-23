@@ -33,6 +33,9 @@ def Jacobi_SLAE_Solver(A, f, x0, max_iter=10000, eps=1e-12):
             Norm_Xnew_Xold += (x.data[0][i]-x_new.data[0][i])**2
         x = copy.deepcopy(x_new) #полноценное копирование
         Norm_Xnew_Xold = math.sqrt(Norm_Xnew_Xold)
+        if Norm_Xnew_Xold > 1e30:
+            print('Jacobi_SLAE_Solver: метод расходится!')
+            break
         iter += 1
 
     return x
@@ -61,10 +64,13 @@ def SOR_SLAE_Solver(A, f, x0, w, max_iter=10000, eps=1e-12):
 
             F_Ax /= A.data[i][i]
             x_new.data[0][i] = (1.0-w)*x.data[0][i] + w*F_Ax
-            Norm_Xnew_Xold += (x.data[0][i]-x_new.data[0][i])**2
+            Norm_Xnew_Xold += math.pow(x.data[0][i]-x_new.data[0][i], 2)
 
         x = copy.deepcopy(x_new)
         Norm_Xnew_Xold = math.sqrt(Norm_Xnew_Xold)
+        if Norm_Xnew_Xold > 1e30:
+            print('SOR_SLAE_Solver: метод расходится!')
+            break
         iter += 1
 
     return x
