@@ -9,9 +9,24 @@ print('Практическое задание №6 Обухов Назар ПМ
 def norma(x):
     return sum([x.data[0][i] ** 2 for i in range(x.rows)]) ** 0.5
 
+def Gershgorin(A, n): #оценивает наибольщий радиус круга Гершгорина
+    if A.cols == 0:
+        raise ValueError('Gershgorin: the matrix is empty')
+    if A.rows != A.cols:
+        raise ValueError('Gershgorin: the matrix is not square')
+
+    summ = []
+    for i in range(A.rows):
+        s = 0
+        for j in range(A.cols):
+            if i != j:
+                s += abs(A.data[j][i])
+        summ.append(s)
+    return (max(summ), n)
+
 # Вариант 15
 a, b = -0.497, 0.937
-challenge = 10
+challenge = 10 #количество замеров времени
 
 for n in [500, 1000, 2000]:
     x = Matrix(data=[[1] * n])
@@ -27,6 +42,8 @@ for n in [500, 1000, 2000]:
     f = A.multiply_matrix(x)  # вектор свободных членов
 
     print(f'Порядок {n}')
+
+    print(f"Радиус наибольшего круга Гершгорина: {Gershgorin(A, n)[0]}")
 
     #Якоби
     print('Метод Якоби')
