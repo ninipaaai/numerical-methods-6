@@ -15,18 +15,6 @@ def Jacobi_SLAE_Solver(A, f, x0, max_iter=10000, eps=1e-12):
         if abs(A.data[i][i]) < 1e-15:
             raise ValueError(f'Jacobi_SLAE_Solver: Нулевой диагональный элемент в позиции {i}')
 
-    # Проверка на диагональное преобладание
-    diagonal_predominance = True
-    for i in range(M):
-        summ = 0
-        for j in range(M):
-            if j != i:
-                summ += A.data[j][i]
-        if A.data[i][i] <= summ:
-            diagonal_predominance = False
-    if not diagonal_predominance:
-        print('Матрица не обладает диагональным преобладанием, следовательно метод может расходиться')
-
     x = Matrix(data=[[1]*A.rows])
     x_new = Matrix(data=[[1]*A.rows])
     Norm_Xnew_Xold = float('inf')
@@ -45,8 +33,7 @@ def Jacobi_SLAE_Solver(A, f, x0, max_iter=10000, eps=1e-12):
             Norm_Xnew_Xold += (x.data[0][i]-x_new.data[0][i])**2
         x = copy.deepcopy(x_new) #полноценное копирование
         Norm_Xnew_Xold = math.sqrt(Norm_Xnew_Xold)
-        if Norm_Xnew_Xold > 1e30:
-            print('Jacobi_SLAE_Solver: метод расходится!')
+        if Norm_Xnew_Xold > 3: #Проверка на расходимость
             break
         iter += 1
 
@@ -80,8 +67,7 @@ def SOR_SLAE_Solver(A, f, x0, w, max_iter=10000, eps=1e-12):
 
         x = copy.deepcopy(x_new)
         Norm_Xnew_Xold = math.sqrt(Norm_Xnew_Xold)
-        if Norm_Xnew_Xold > 1e30:
-            print('SOR_SLAE_Solver: метод расходится!')
+        if Norm_Xnew_Xold > 3:
             break
         iter += 1
 
