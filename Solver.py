@@ -67,7 +67,7 @@ def SOR_SLAE_Solver(A, f, x0, w, max_iter=10000, eps=1e-12):
 
         x = copy.deepcopy(x_new)
         Norm_Xnew_Xold = math.sqrt(Norm_Xnew_Xold)
-        if Norm_Xnew_Xold > 3:
+        if Norm_Xnew_Xold > 3: #проверка на расходимость
             break
         iter += 1
 

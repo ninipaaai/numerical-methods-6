@@ -29,11 +29,11 @@ a, b = -0.497, 0.937
 challenge = 10 #количество замеров времени
 
 for n in [500, 1000, 2000]:
-    x = Matrix(data=[[1] * n])
+    x = Matrix(data=[[1] * n]) #точное решение
     A = Matrix(data=[[0] * n for i in range(n)])
 
-    for i in range(n):  # j — столбец
-        for j in range(n):  # i — строка
+    for i in range(n):
+        for j in range(n):
             if i != j:
                 A.data[j][i] = a * (i + 1) + b * (j + 1)
             else:
